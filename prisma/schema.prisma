@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRol {
+  ALUMNO
+  TUTOR
+  ADMIN
+}
+
+enum EstadoJustificante {
+  PENDIENTE
+  ACEPTADO
+  RECHAZADO
+  CADUCADO
+}
+
+enum DireccionGrupo {
+  INGENIERIA
+  LICENCIATURA
+}
+
+model User {
+  matricula String   @id @db.VarChar(10)
+  nombre    String   @db.VarChar(30)
+  apellidos String   @db.VarChar(30)
+  correo    String   @unique @db.VarChar(30)
+  estado    Boolean? @default(true)
+  password  String   @db.VarChar(100)
+
+  rol UserRol @default(ALUMNO)
+
+  tutor      String?
+  fk_tutor   User?   @relation("Tutor", fields: [tutor], references: [matricula], onDelete: Cascade)
+  fk_alumnos User[]  @relation("Tutor")
+
+  fk_justificante_alumno Justificante[] @relation("Relacion_Alumnos")
+  fk_justificante_tutor  Justificante[] @relation("Relacion_Tutores")
+
+  fk_grupo_tutorado Grupo[] @relation("Grupo_Tutorado")
+
+  cuatrimestre Int?
+  grupo        String?        @db.VarChar(10)
+  direccion    DireccionGrupo
+  fk_grupo     Grupo?         @relation("Grupo_Alumnos", references: [id], fields: [grupo], onUpdate: Cascade)
+}
+
+model Justificante {
+  id                       String   @id @default(uuid())
+  motivo                   String   @db.VarChar(200)
+  fecha_creacion           DateTime @db.Date()
+  fecha_justificada_inicio DateTime @db.Date()
+  fecha_justificada_fin    DateTime @db.Date()
+  id_evidencia             String?  @db.VarChar(50)
+
+  direccion DireccionGrupo
+  estado    EstadoJustificante @default(PENDIENTE)
+
+  id_alumno String
+  fk_alumno User   @relation("Relacion_Alumnos", fields: [id_alumno], references: [matricula], onDelete: Cascade)
+
+  id_tutor String
+  fk_tutor User   @relation("Relacion_Tutores", fields: [id_tutor], references: [matricula], onDelete: Cascade)
+}
+
+model Grupo {
+  id           String         @id @db.VarChar(20)
+  cuatrimestre Int
+  direccion    DireccionGrupo
+
+  tutor    String
+  fk_tutor User   @relation("Grupo_Tutorado", references: [matricula], fields: [tutor])
+
+  fk_alumnos User[] @relation("Grupo_Alumnos")
+}
