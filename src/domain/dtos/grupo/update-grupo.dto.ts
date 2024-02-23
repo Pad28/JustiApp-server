@@ -29,7 +29,7 @@ export class UpdateGrupoDto {
                 if( !Object.keys(DireccionGrupoDB).includes(obj.direccion) ) return ['Direccion no valida'];
             };
             if(obj.cuatrimenstre) validators.isNumber('cuatrimenstre');
-            if(obj.tutor) validators.isNumber('tutor');
+            if(obj.tutor) validators.checkPattern('tutor', /^[0-9]+$/)
             
             const { id, cuatrimenstre, direccion, tutor } = obj;
             return [undefined, new UpdateGrupoDto( id, cuatrimenstre, direccion, tutor )];
