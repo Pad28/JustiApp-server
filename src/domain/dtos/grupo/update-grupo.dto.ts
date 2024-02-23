@@ -24,7 +24,7 @@ export class UpdateGrupoDto {
             
             // validators.isRequired('id');
             if(obj.id) validators.toUpperCase('id');
-            if( obj.direccion ) {
+            if(obj.direccion) {
                 validators.toUpperCase('direccion')
                 if( !Object.keys(DireccionGrupoDB).includes(obj.direccion) ) return ['Direccion no valida'];
             };
