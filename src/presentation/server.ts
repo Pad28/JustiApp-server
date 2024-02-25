@@ -47,16 +47,16 @@ export class Server {
             res.sendFile(path.join(__dirname, `../../${this.publicPath}`, 'index.html'))
         });
 
-        const httpsOptions = {
-            key: fs.readFileSync(path.join(__dirname, '../../keys/server.key')),
-            cert: fs.readFileSync(path.join(__dirname, '../../keys/server.crt')),
-        }
-        https.createServer(httpsOptions, this.app).listen(this.port, () => {
-            console.log(`Server listening in port ${this.port}`)
-        });
-        // this.app.listen(this.port, () => {
+        // const httpsOptions = {
+        //     key: fs.readFileSync(path.join(__dirname, '../../keys/server.key')),
+        //     cert: fs.readFileSync(path.join(__dirname, '../../keys/server.crt')),
+        // }
+        // https.createServer(httpsOptions, this.app).listen(this.port, () => {
         //     console.log(`Server listening in port ${this.port}`)
         // });
+        this.app.listen(this.port, () => {
+            console.log(`Server listening in port ${this.port}`)
+        });
     }
 
 }
