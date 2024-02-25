@@ -44,7 +44,7 @@ export class GrupoService {
         }
 
         if(data.tutor) {
-            const existTutor = await user.findUnique({ where: { matricula: data.tutor } });
+            const existTutor = await user.findUnique({ where: { matricula: data.tutor + '' } });
             if(!existTutor) throw CustomError.badRequest('tutor no valido');
             await user.updateMany({ where: { grupo: id }, data: { tutor: data.tutor } });
         }
