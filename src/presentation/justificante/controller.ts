@@ -1,15 +1,13 @@
 import { Request, Response } from "express";
 import { AppController } from "../controller";
-import { CreateJustificanteDto } from "../../domain";
+import { CreateJustificanteAndEvidenciaDto, CreateJustificanteDto } from "../../domain";
 import { JustificanteService } from "../services";
 
 export class JustificanteController extends AppController{
 
     constructor(
         private readonly justificanteService: JustificanteService,
-    ) {
-        super()
-    }
+    ) { super(); }
 
     public createJustificante = (req: Request, res: Response) => {
         const { user } = req.body;
@@ -24,4 +22,14 @@ export class JustificanteController extends AppController{
             .catch(error => this.triggerError(error, res));
     }
 
+    public enviarEvidenciaAndJustificante = (req: Request, res: Response) => {
+        if(!req.file) return res.status(401).json({ error: 'No hay evidencia que subir' });
+        const [error, createJustificanteDto] = CreateJustificanteAndEvidenciaDto.create({
+            ...req.body,
+        });
+        if(error || !createJustificanteDto) return res.status(400).json({ error });
+        this.justificanteService.enviarJustificante(createJustificanteDto, req.file)
+            .then(justificante => res.json({ justificante }))
+            .catch(error => this.triggerError(error, res));
+    }
 }

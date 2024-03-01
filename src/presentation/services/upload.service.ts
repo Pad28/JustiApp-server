@@ -17,7 +17,7 @@ export class UploadService {
         const [ error, fileName ] = this.fileManager.uploadFile({
             extencionesValidas: ['png', 'jpg', 'jpeg'],
             file: file,
-            path: path.resolve(__dirname + '../../../../uploads/evidencias')
+            path: path.resolve(__dirname + '../../../../uploads/evidencias'),
         });
         if(error || !fileName) throw CustomError.internalServerError();
 
