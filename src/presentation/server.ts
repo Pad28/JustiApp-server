@@ -59,8 +59,8 @@ export class Server {
 
         if(this.isHttps) {
             const httpsOptions = {
-                key: fs.readFileSync(path.join(__dirname, '../../keys/server.key')),
-                cert: fs.readFileSync(path.join(__dirname, '../../keys/server.crt')),
+                key: fs.readFileSync(this.httpsCert),
+                cert: fs.readFileSync(this.httpsCert),
             }
             https.createServer(httpsOptions, this.app).listen(this.port, () => {
                 console.log(`Server listening in port ${this.port}`)
