@@ -11,4 +11,7 @@ export const envs = {
     API_SERVICE: get('API_SERVICE').required().asString(),
     USER_ADMIN: get('USER_ADMIN').required().asString(),
     PASSWORD_ADMIN: get('PASSWORD_ADMIN').required().asString(),
+    HTTPS: get('HTTPS').default("false").asBool(),
+    HTTPS_KEY: get("HTTPS_KEY").required().asString(),
+    HTTPS_CERT: get("HTTPS_CERT").required().asString(),
 }

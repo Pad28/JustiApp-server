@@ -10,6 +10,9 @@ import { conectionDB } from "./data";
         port: envs.PORT,
         publicPaht: envs.PUBLIC_PATH,
         routes: AppRoutes.routes,
+        isHttps: envs.HTTPS,
+        https_cert: envs.HTTPS_CERT,
+        https_key: envs.HTTPS_KEY,
     });
 
     server.start();
