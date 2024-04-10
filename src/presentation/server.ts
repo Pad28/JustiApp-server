@@ -59,7 +59,7 @@ export class Server {
 
         if(this.isHttps) {
             const httpsOptions = {
-                key: fs.readFileSync(this.httpsCert),
+                key: fs.readFileSync(this.httpsKey),
                 cert: fs.readFileSync(this.httpsCert),
             }
             https.createServer(httpsOptions, this.app).listen(this.port, () => {
