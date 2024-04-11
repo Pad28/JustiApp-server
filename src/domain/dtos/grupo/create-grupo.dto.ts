@@ -16,7 +16,7 @@ export class CreateGrupoDto {
             validators.requiredKeys('id', 'cuatrimestre', 'direccion', 'tutor');
             obj.id = (obj.id as string).toUpperCase();
 
-            validators.isNumber('tutor');
+            validators.capitalizar('tutor');
             
             validators.isNumber('cuatrimestre');
 
