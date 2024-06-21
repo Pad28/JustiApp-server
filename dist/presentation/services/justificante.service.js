@@ -64,7 +64,7 @@ class JustificanteService {
             const newJustificante = yield justificante.create({ data: Object.assign(Object.assign({}, createJustificanteDto), { direccion: existUser.direccion, id_tutor: existUser.tutor, id_evidencia: fileName }) });
             const pathFile = yield this.excelService.crearExcel(newJustificante, existUser);
             this.emailService.enviarArchivo({
-                destinatario: existTutor.correo,
+                destinatario: `${existTutor.correo}, ${existUser.correo}`,
                 pathFile: [pathFile, path_1.default.resolve(__dirname + '../../../../uploads/evidencias', fileName)],
                 subject: `Justificante para ${existUser.nombre} ${existUser.matricula}`
             });

@@ -71,7 +71,7 @@ export class JustificanteService {
         
         const pathFile = await this.excelService.crearExcel(newJustificante, existUser);
         this.emailService.enviarArchivo({
-            destinatario: existTutor.correo,
+            destinatario: `${existTutor.correo}, ${existUser.correo}`,
             pathFile: [pathFile, path.resolve(__dirname + '../../../../uploads/evidencias', fileName)],
             subject: `Justificante para ${existUser.nombre} ${existUser.matricula}`
         });
