@@ -19,6 +19,9 @@ const data_1 = require("./data");
         port: config_1.envs.PORT,
         publicPaht: config_1.envs.PUBLIC_PATH,
         routes: routes_1.AppRoutes.routes,
+        isHttps: config_1.envs.HTTPS,
+        https_cert: config_1.envs.HTTPS_CERT,
+        https_key: config_1.envs.HTTPS_KEY,
     });
     server.start();
 }))();

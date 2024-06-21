@@ -15,7 +15,7 @@ class CreateGrupoDto {
             const validators = new config_1.Validators(obj);
             validators.requiredKeys('id', 'cuatrimestre', 'direccion', 'tutor');
             obj.id = obj.id.toUpperCase();
-            validators.isNumber('tutor');
+            validators.capitalizar('tutor');
             validators.isNumber('cuatrimestre');
             obj.direccion = obj.direccion.toUpperCase();
             if (!Object.keys(data_1.DireccionGrupoDB).includes(obj.direccion))

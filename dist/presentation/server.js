@@ -14,18 +14,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Server = void 0;
 const path_1 = __importDefault(require("path"));
-// import https from 'https'; 
-// import fs from 'fs';
+const https_1 = __importDefault(require("https"));
+const fs_1 = __importDefault(require("fs"));
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const compression_1 = __importDefault(require("compression"));
 class Server {
     constructor(options) {
-        const { port, publicPaht, routes, dbTest } = options;
+        const { port, publicPaht, routes, https_cert, https_key, isHttps } = options;
         this.app = (0, express_1.default)();
         this.port = port;
         this.publicPath = publicPaht;
         this.routes = routes;
+        this.isHttps = isHttps;
+        this.httpsCert = https_cert;
+        this.httpsKey = https_key;
     }
     start() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -41,16 +44,20 @@ class Server {
             this.app.get('*', (req, res) => {
                 res.sendFile(path_1.default.join(__dirname, `../../${this.publicPath}`, 'index.html'));
             });
-            // const httpsOptions = {
-            //     key: fs.readFileSync(path.join(__dirname, '../../keys/server.key')),
-            //     cert: fs.readFileSync(path.join(__dirname, '../../keys/server.crt')),
-            // }
-            // https.createServer(httpsOptions, this.app).listen(this.port, () => {
-            //     console.log(`Server listening in port ${this.port}`)
-            // });
-            this.app.listen(this.port, () => {
-                console.log(`Server listening in port ${this.port}`);
-            });
+            if (this.isHttps) {
+                const httpsOptions = {
+                    key: fs_1.default.readFileSync(this.httpsKey),
+                    cert: fs_1.default.readFileSync(this.httpsCert),
+                };
+                https_1.default.createServer(httpsOptions, this.app).listen(this.port, () => {
+                    console.log(`Server listening in port ${this.port}`);
+                });
+            }
+            else {
+                this.app.listen(this.port, () => {
+                    console.log(`Server listening in port ${this.port}`);
+                });
+            }
         });
     }
 }

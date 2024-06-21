@@ -37,7 +37,7 @@ class JustificanteService {
             const pathFile = yield this.excelService.crearExcel(newJustificante, existUser);
             this.emailService.enviarArchivo({
                 destinatario: existTutor.correo,
-                pathFile: pathFile,
+                pathFile: [pathFile],
                 subject: `Justificante para ${existUser.nombre} ${existUser.matricula}`
             });
             return newJustificante;
@@ -65,7 +65,7 @@ class JustificanteService {
             const pathFile = yield this.excelService.crearExcel(newJustificante, existUser);
             this.emailService.enviarArchivo({
                 destinatario: existTutor.correo,
-                pathFile: pathFile,
+                pathFile: [pathFile, path_1.default.resolve(__dirname + '../../../../uploads/evidencias', fileName)],
                 subject: `Justificante para ${existUser.nombre} ${existUser.matricula}`
             });
             return newJustificante;

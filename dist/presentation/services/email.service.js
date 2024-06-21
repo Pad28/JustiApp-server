@@ -19,16 +19,22 @@ class EmailService {
                 pass: config_1.envs.GMAIL_KEY
             }
         });
+        const attachments = pathFile.map((v, i) => {
+            if (i == 0)
+                return {
+                    filename: `Justificante.xlsx`,
+                    content: fs_1.default.createReadStream(path_1.default.resolve(pathFile[i])),
+                };
+            return {
+                filename: pathFile[i],
+                content: fs_1.default.createReadStream(path_1.default.resolve(pathFile[i])),
+            };
+        });
         const mailOptions = {
             from: config_1.envs.GMAIL_DIRECCION,
             to: destinatario,
             subject: subject,
-            attachments: [
-                {
-                    filename: `Justificante`,
-                    content: fs_1.default.createReadStream(path_1.default.resolve(pathFile))
-                }
-            ]
+            attachments
         };
         trasnporter.sendMail(mailOptions, (err) => {
             if (err)

@@ -23,7 +23,7 @@ const emailTemplate = (token) => `
                 <h2 style="font-family: 'Gabarito';">¡Ya falta poco!</h2>
                 <p style="font-family: 'Gabarito';" >Entra al siguente enlace para completar tu proceso de de registro a JustiApp</p>
                 <br>
-                <a  style="font-family: 'Gabarito';" href="http://${envs_1.envs.API_SERVICE}/register/${token}" >Crear cuenta</a>
+                <a  style="font-family: 'Gabarito';" href="${envs_1.envs.API_SERVICE}/register/${token}" >Crear cuenta</a>
             </td>
         </tr>
         <tr>
