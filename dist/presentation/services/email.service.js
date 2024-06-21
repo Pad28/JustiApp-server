@@ -25,8 +25,9 @@ class EmailService {
                     filename: `Justificante.xlsx`,
                     content: fs_1.default.createReadStream(path_1.default.resolve(pathFile[i])),
                 };
+            const array = pathFile[i].split("/");
             return {
-                filename: pathFile[i],
+                filename: array[array.length - 1],
                 content: fs_1.default.createReadStream(path_1.default.resolve(pathFile[i])),
             };
         });

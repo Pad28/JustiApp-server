@@ -35,9 +35,10 @@ export class EmailService {
                 filename: `Justificante.xlsx`,
                 content: fs.createReadStream(path.resolve(pathFile[i])),
             }
-
+            
+            const array = pathFile[i].split("/");
             return {
-                filename: pathFile[i],
+                filename: array[array.length - 1],
                 content: fs.createReadStream(path.resolve(pathFile[i])),
             }
         });
