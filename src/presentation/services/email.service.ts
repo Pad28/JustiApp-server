@@ -8,7 +8,7 @@ import { CustomError } from '../../domain';
 interface EmailFileProperties {
     destinatario: string;
     subject: string;
-    pathFile: string
+    pathFile: string[];
 }
 
 interface EmailProperties {
@@ -29,17 +29,24 @@ export class EmailService {
                 pass: envs.GMAIL_KEY
             }
         });
+        
+        const attachments = pathFile.map((v, i) => {
+            if(i == 0) return {
+                filename: `Justificante.xlsx`,
+                content: fs.createReadStream(path.resolve(pathFile[i])),
+            }
+
+            return {
+                filename: pathFile[i],
+                content: fs.createReadStream(path.resolve(pathFile[i])),
+            }
+        });
 
         const mailOptions = {
             from: envs.GMAIL_DIRECCION,
             to: destinatario,
             subject: subject,
-            attachments: [
-                {
-                    filename: `Justificante`,
-                    content: fs.createReadStream(path.resolve(pathFile))
-                }
-            ]
+            attachments
         }
 
         trasnporter.sendMail(mailOptions, (err) => {

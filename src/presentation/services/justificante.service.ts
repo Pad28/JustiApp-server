@@ -34,7 +34,7 @@ export class JustificanteService {
         const pathFile = await this.excelService.crearExcel(newJustificante, existUser);
         this.emailService.enviarArchivo({
             destinatario: existTutor.correo,
-            pathFile: pathFile,
+            pathFile: [pathFile],
             subject: `Justificante para ${existUser.nombre} ${existUser.matricula}`
         });
         return newJustificante;
@@ -60,6 +60,7 @@ export class JustificanteService {
             path: path.resolve(__dirname + '../../../../uploads/evidencias'),
         });
 
+
         if(error || !fileName) throw CustomError.internalServerError();
         const newJustificante = await justificante.create({ data: {
             ...createJustificanteDto,
@@ -71,7 +72,7 @@ export class JustificanteService {
         const pathFile = await this.excelService.crearExcel(newJustificante, existUser);
         this.emailService.enviarArchivo({
             destinatario: existTutor.correo,
-            pathFile: pathFile,
+            pathFile: [pathFile, path.resolve(__dirname + '../../../../uploads/evidencias', fileName)],
             subject: `Justificante para ${existUser.nombre} ${existUser.matricula}`
         });
         return newJustificante;
