@@ -40,6 +40,7 @@ class EmailService {
         trasnporter.sendMail(mailOptions, (err) => {
             if (err)
                 return domain_1.CustomError.internalServerError();
+            props.pathFile.forEach(e => fs_1.default.unlinkSync(e));
         });
     }
     enviarCorreo(props) {

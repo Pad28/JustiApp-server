@@ -6,3 +6,4 @@ export * from './grupo.service';
 export * from './justificante.service';
 export * from './upload.service';
 export * from './user.service';
+export * from "./versiones.service";

@@ -71,5 +71,16 @@ class JustificanteService {
             return newJustificante;
         });
     }
+    sendApp(file) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const [error, fileName] = this.fileManager.uploadFile({
+                extencionesValidas: ["apk"],
+                file,
+                path: path_1.default.resolve(__dirname + '../../../../uploads/versions'),
+            });
+            if (error || !fileName)
+                throw domain_1.CustomError.internalServerError();
+        });
+    }
 }
 exports.JustificanteService = JustificanteService;

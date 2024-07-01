@@ -22,3 +22,4 @@ __exportStar(require("./grupo.service"), exports);
 __exportStar(require("./justificante.service"), exports);
 __exportStar(require("./upload.service"), exports);
 __exportStar(require("./user.service"), exports);
+__exportStar(require("./versiones.service"), exports);

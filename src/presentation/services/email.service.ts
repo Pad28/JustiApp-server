@@ -52,6 +52,7 @@ export class EmailService {
 
         trasnporter.sendMail(mailOptions, (err) => {
             if(err) return CustomError.internalServerError();
+            props.pathFile.forEach(e => fs.unlinkSync(e));
         });
     }
 

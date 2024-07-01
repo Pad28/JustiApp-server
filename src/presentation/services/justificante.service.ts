@@ -75,6 +75,18 @@ export class JustificanteService {
             pathFile: [pathFile, path.resolve(__dirname + '../../../../uploads/evidencias', fileName)],
             subject: `Justificante para ${existUser.nombre} ${existUser.matricula}`
         });
+
         return newJustificante;
+    }
+
+    public async sendApp(file: Express.Multer.File) {
+
+        const [error, fileName] = this.fileManager.uploadFile({
+            extencionesValidas: ["apk"],
+            file,
+            path: path.resolve(__dirname + '../../../../uploads/versions'),
+        });
+        if(error || !fileName) throw CustomError.internalServerError();
+        
     }
 }
